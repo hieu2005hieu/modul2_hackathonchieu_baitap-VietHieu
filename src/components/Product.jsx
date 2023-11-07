@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import Cart from "./cart";
 
 export default function Product() {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
   const [monney, setMonney] = useState(1250000000);
   const [products, setProducts] = useState([
     {
@@ -146,31 +151,34 @@ export default function Product() {
     },
   ]);
   const [counts, setCounts] = useState(Array(products.length).fill(0));
+
   const increase = (index, price) => {
     const newCounts = [...counts];
     newCounts[index] += 1;
     setCounts(newCounts);
     setMonney(monney - price);
   };
-      const decrease = (index, price) => {
-        const newCounts = [...counts];
-        if (newCounts[index] > 0) {
-          newCounts[index] -= 1;
-          setCounts(newCounts);
-          setMonney(monney + price);
-        }
-      };
+
+  const decrease = (index, price) => {
+    const newCounts = [...counts];
+    if (newCounts[index] > 0) {
+      newCounts[index] -= 1;
+      setCounts(newCounts);
+      setMonney(monney + price);
+    }
+  };
+
   return (
     <>
       <div id="heatder">
-        <h2>To Spend: ${monney} you Heve Monney</h2>
+        <h2>To Spend: {formatter.format(monney)} you Heve Monney</h2>
       </div>
       <div className="head">
         {products.map((item, index) => (
           <div key={index} className="title">
             <img src={item.image} alt="" />
             <p>{item.title}</p>
-            <p>{item.price}$</p>
+            <p>{formatter.format(item.price)}</p>
             <div className="btn">
               <div>
                 <button onClick={() => decrease(index, item.price)}>
@@ -185,7 +193,11 @@ export default function Product() {
           </div>
         ))}
       </div>
-      <Cart data={products} setData={setProducts} />
+      <Cart
+        dataProducts={products}
+        setDataProducts={setProducts}
+        counts={counts}
+      />
     </>
   );
 }

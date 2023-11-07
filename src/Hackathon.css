@@ -46,3 +46,21 @@ padding: 20px;
 .title{
     border: 1px solid black;
 }
+.container{
+    background-color: aqua;
+    text-align: center;
+    padding: 20px;
+}
+.container h3 {
+    font-size: 50px;
+}
+.nameProduct{
+    font-size: 20px;
+}
+.btn_resset{
+    background-color: rgb(255, 8, 8);
+    color: white;
+    border: none;
+    padding: 20px;
+    margin-top: 20px;
+}
